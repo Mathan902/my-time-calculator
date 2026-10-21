@@ -1,6 +1,8 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { BatIcon } from "@/components/bat-icon";
+import { GothamScene } from "@/components/gotham-scene";
 import { loginAction, type LoginState } from "../actions";
 
 export default function LoginPage() {
@@ -9,28 +11,27 @@ export default function LoginPage() {
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-12">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,#e0e7ff_0%,transparent_60%)]" />
-      <div className="pointer-events-none absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-emerald-200/40 blur-3xl" />
+      <GothamScene />
 
       <div className="relative w-full max-w-md">
-        <div className="mb-8 flex flex-col items-center text-center">
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/30">
-            <ClockIcon className="h-7 w-7" />
+        <div className="mb-8 flex animate-rise flex-col items-center text-center">
+          <div className="group mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-400 text-zinc-950 shadow-lg shadow-yellow-400/25 transition hover:scale-110 hover:shadow-yellow-400/50">
+            <BatIcon className="w-9 group-hover:animate-flap" />
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">Welcome back</h1>
-          <p className="mt-1 text-sm text-zinc-500">Sign in with your Soft Suave ERP account to view your hours</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">Welcome back</h1>
+          <p className="mt-1 text-sm text-zinc-400">Sign in with your Soft Suave ERP account to view your hours</p>
         </div>
 
         <form
           action={action}
-          className="space-y-5 rounded-2xl border border-zinc-200/80 bg-white/90 p-8 shadow-xl shadow-zinc-900/5 backdrop-blur"
+          className="animate-rise space-y-5 rounded-2xl border border-zinc-800 bg-zinc-900/80 p-8 [animation-delay:120ms] shadow-2xl shadow-black/50 backdrop-blur"
         >
           <div className="space-y-1.5">
-            <label htmlFor="usr" className="text-sm font-medium text-zinc-700">
+            <label htmlFor="usr" className="text-sm font-medium text-zinc-300">
               Email
             </label>
             <div className="relative">
-              <MailIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+              <MailIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
               <input
                 id="usr"
                 name="usr"
@@ -38,17 +39,17 @@ export default function LoginPage() {
                 autoComplete="username"
                 placeholder="you@softsuave.com"
                 required
-                className="w-full rounded-lg border border-zinc-300 bg-white py-2.5 pl-10 pr-3 text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/15"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-950/60 py-2.5 pl-10 pr-3 text-zinc-100 placeholder:text-zinc-600 outline-none transition focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/15"
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="pwd" className="text-sm font-medium text-zinc-700">
+            <label htmlFor="pwd" className="text-sm font-medium text-zinc-300">
               Password
             </label>
             <div className="relative">
-              <LockIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+              <LockIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
               <input
                 id="pwd"
                 name="pwd"
@@ -56,7 +57,7 @@ export default function LoginPage() {
                 autoComplete="current-password"
                 placeholder="••••••••"
                 required
-                className="w-full rounded-lg border border-zinc-300 bg-white py-2.5 pl-10 pr-11 text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/15"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-950/60 py-2.5 pl-10 pr-11 text-zinc-100 placeholder:text-zinc-600 outline-none transition focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/15"
               />
               <button
                 type="button"
@@ -64,7 +65,7 @@ export default function LoginPage() {
                 aria-label={showPassword ? "Hide password" : "Show password"}
                 aria-pressed={showPassword}
                 title={showPassword ? "Hide password" : "Show password"}
-                className="absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md text-zinc-400 transition hover:bg-zinc-100 hover:text-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md text-zinc-500 transition hover:bg-zinc-800 hover:text-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400"
               >
                 {showPassword ? <EyeOffIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
               </button>
@@ -72,7 +73,7 @@ export default function LoginPage() {
           </div>
 
           {state.error && (
-            <div role="alert" className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700">
+            <div role="alert" className="flex items-start gap-2 rounded-lg border border-red-900/60 bg-red-950/40 px-3 py-2.5 text-sm text-red-300">
               <AlertIcon className="mt-0.5 h-4 w-4 shrink-0" />
               <span>{state.error}</span>
             </div>
@@ -81,14 +82,14 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={pending}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-indigo-600 to-violet-600 py-2.5 font-medium text-white shadow-md shadow-indigo-500/25 transition hover:from-indigo-500 hover:to-violet-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-indigo-500/30 disabled:cursor-not-allowed disabled:opacity-70"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-yellow-400 py-2.5 font-semibold text-zinc-950 shadow-md shadow-yellow-400/20 transition hover:-translate-y-0.5 hover:bg-yellow-300 hover:shadow-lg hover:shadow-yellow-400/30 active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-yellow-400/30 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {pending && <Spinner className="h-4 w-4" />}
             {pending ? "Signing in…" : "Sign in"}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-xs text-zinc-400">Your credentials are sent only to the ERP.</p>
+        <p className="mt-6 animate-rise text-center text-xs text-zinc-500 [animation-delay:240ms]">Your credentials are sent only to the ERP.</p>
       </div>
     </main>
   );
@@ -101,15 +102,6 @@ function Svg({ className, children }: IconProps & { children: React.ReactNode })
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       {children}
     </svg>
-  );
-}
-
-function ClockIcon(p: IconProps) {
-  return (
-    <Svg {...p}>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
-    </Svg>
   );
 }
 

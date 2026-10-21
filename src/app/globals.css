@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f6f7fb;
-  --foreground: #18181b;
+  --background: #09090b;
+  --foreground: #e4e4e7;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -21,4 +22,69 @@ body {
 input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   opacity: 0.6;
+}
+
+/* Tailwind v4 resets buttons to the default cursor; restore the pointer */
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
+/* ---------- Gotham animations ---------- */
+@theme {
+  --animate-fly: fly 18s linear infinite;
+  --animate-sweep: sweep 9s ease-in-out infinite alternate;
+  --animate-twinkle: twinkle 3s ease-in-out infinite;
+  --animate-rise: rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-grow: grow 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-flap: flap 0.5s ease-in-out;
+  --animate-glow: glow 4s ease-in-out infinite;
+}
+
+/* Bats cross the sky left → right with a gentle bob */
+@keyframes fly {
+  0% { transform: translate(-10vw, 0) scale(var(--bat-scale, 1)); }
+  25% { transform: translate(25vw, -14px) scale(var(--bat-scale, 1)); }
+  50% { transform: translate(55vw, 8px) scale(var(--bat-scale, 1)); }
+  75% { transform: translate(85vw, -10px) scale(var(--bat-scale, 1)); }
+  100% { transform: translate(115vw, 0) scale(var(--bat-scale, 1)); }
+}
+
+@keyframes sweep {
+  from { transform: rotate(-14deg); }
+  to { transform: rotate(10deg); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes flap {
+  0%, 100% { transform: scaleY(1); }
+  30% { transform: scaleY(0.6) translateY(-1px); }
+  60% { transform: scaleY(1.1); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
