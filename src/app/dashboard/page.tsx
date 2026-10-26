@@ -4,7 +4,8 @@ import { fmtDuration, fmtTime, summarize, todayInErpTz, type DaySummary } from "
 import { getSession } from "@/lib/session";
 import { BatIcon } from "@/components/bat-icon";
 import { GothamScene } from "@/components/gotham-scene";
-import { logoutAction } from "../actions";
+import { Shell } from "@/components/shell";
+import { AlertIcon, BriefcaseIcon, ClockIcon, CoffeeIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
@@ -54,7 +55,7 @@ export default async function Dashboard({
     // Session cookie is stale: clear it via the logout route and send the user to log in again
     if (e instanceof ErpAuthError) redirect("/api/logout");
     return (
-      <Shell name={session.fullName}>
+      <Shell name={session.fullName} active="daily">
         <div role="alert" className="flex items-start gap-3 rounded-xl border border-red-900/60 bg-red-950/40 p-4 text-red-300">
           <AlertIcon className="mt-0.5 h-5 w-5 shrink-0" />
           <p>{(e as Error).message}</p>
@@ -71,7 +72,7 @@ export default async function Dashboard({
     : fmtDate(to, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
   return (
-    <Shell name={employee.employee_name}>
+    <Shell name={employee.employee_name} active="daily">
       <section className="relative h-44 animate-rise overflow-hidden rounded-2xl border border-zinc-800 shadow-lg shadow-black/40 sm:h-52">
         <GothamScene />
         <div className="relative flex h-full flex-col justify-end bg-linear-to-t from-black/70 via-black/20 to-transparent p-5 sm:p-6">
@@ -160,45 +161,6 @@ export default async function Dashboard({
         </div>
       )}
     </Shell>
-  );
-}
-
-function Shell({ name, children }: { name: string; children: React.ReactNode }) {
-  const initials = name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]!.toUpperCase())
-    .join("");
-
-  return (
-    <div className="min-h-screen">
-      <header className="sticky top-0 z-10 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-          <div className="group flex items-center gap-2.5">
-            <div className="flex h-9 w-9 transition group-hover:scale-110 items-center justify-center rounded-xl bg-yellow-400 text-zinc-950 shadow-md shadow-yellow-400/20">
-              <BatIcon className="w-6 group-hover:animate-flap" />
-            </div>
-            <span className="text-lg font-semibold tracking-tight text-zinc-100">Work Hours</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="hidden items-center gap-2 sm:flex">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-800 text-xs font-semibold text-yellow-400 ring-1 ring-yellow-400/30">
-                {initials}
-              </div>
-              <span className="text-sm font-medium text-zinc-300">{name}</span>
-            </div>
-            <form action={logoutAction}>
-              <button className="flex items-center gap-1.5 rounded-lg border border-zinc-800 px-3 py-1.5 text-sm font-medium text-zinc-400 transition hover:border-zinc-700 hover:bg-zinc-900 hover:text-zinc-100">
-                <LogoutIcon className="h-4 w-4" />
-                Log out
-              </button>
-            </form>
-          </div>
-        </div>
-      </header>
-      <main className="mx-auto max-w-5xl space-y-6 px-4 py-8">{children}</main>
-    </div>
   );
 }
 
@@ -376,59 +338,5 @@ function Pill({ label, value, className }: { label: string; value: string; class
       <p className="text-[10px] font-medium uppercase tracking-wider opacity-60">{label}</p>
       <p className="font-semibold">{value}</p>
     </div>
-  );
-}
-
-type IconProps = { className?: string };
-
-function Svg({ className, children }: IconProps & { children: React.ReactNode }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      {children}
-    </svg>
-  );
-}
-
-function ClockIcon(p: IconProps) {
-  return (
-    <Svg {...p}>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
-    </Svg>
-  );
-}
-
-function BriefcaseIcon(p: IconProps) {
-  return (
-    <Svg {...p}>
-      <rect x="3" y="7" width="18" height="13" rx="2" />
-      <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18" />
-    </Svg>
-  );
-}
-
-function CoffeeIcon(p: IconProps) {
-  return (
-    <Svg {...p}>
-      <path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z" />
-      <path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17M8 3v3M12 3v3" />
-    </Svg>
-  );
-}
-
-function LogoutIcon(p: IconProps) {
-  return (
-    <Svg {...p}>
-      <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3" />
-    </Svg>
-  );
-}
-
-function AlertIcon(p: IconProps) {
-  return (
-    <Svg {...p}>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 8v4M12 16h.01" />
-    </Svg>
   );
 }
